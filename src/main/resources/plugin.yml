@@ -1,0 +1,33 @@
+name: ChatsPlus
+author: Niestrat99
+main: io.github.niestrat99.chatsplus.Main
+
+version: 1.0
+api-version: 1.20
+
+permissions:
+  chatsplus.command.*:
+    default: "true"
+    children:
+      chatsplus.command.assign: false
+      chatsplus.command.reload: false
+      chatsplus.command.kick: false
+      chatsplus.command.help: true
+      chatsplus.command.chat: true
+      chatsplus.command.off: true
+      chatsplus.command.mute: true
+      chatsplus.command.unmute: true
+      chatsplus.chat: true
+  chatsplus.admin.*:
+    default: op
+    description: Mainly things that a regular player probably shouldn't have access to.
+    children:
+      chatsplus.admin.join: true
+      chatsplus.admin.bypass: true
+
+commands:
+  chat:
+    description: Main chat command.
+
+  chatsystem:
+    description: Console only chat commands.
