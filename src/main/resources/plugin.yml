@@ -2,7 +2,7 @@ name: ChatsPlus
 author: Niestrat99
 main: io.github.niestrat99.chatsplus.Main
 
-version: 1.0
+version: ${plugin_version}
 api-version: 1.20
 
 permissions:
