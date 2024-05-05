@@ -28,7 +28,6 @@ public class Chats {
         Main.debug("Unassigning player " + player.getName() + " from any chat.");
         chatRoom.remove(player);
     }
-
     public static void getChatsList() {
         ConfigSection chatsSection = Config.configFile.getConfigSection("chats");
         chats.clear();

@@ -4,7 +4,9 @@ import io.github.niestrat99.chatsplus.commands.ChatCommand;
 import io.github.niestrat99.chatsplus.commands.ConsoleCommands;
 import io.github.niestrat99.chatsplus.configuration.Config;
 import io.github.niestrat99.chatsplus.listeners.ChatListener;
+import io.github.niestrat99.chatsplus.listeners.EssentialsDiscordListener;
 import io.github.niestrat99.chatsplus.utils.*;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,6 +24,9 @@ public class Main extends JavaPlugin {
         // Registering listeners
         log("Registering events...");
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        if (Bukkit.getPluginManager().getPlugin("EssentialsDiscord") != null) {
+            getServer().getPluginManager().registerEvents(new EssentialsDiscordListener(), this);
+        }
 
         // Registering commands
         log("Registering commands...");
@@ -55,17 +60,18 @@ public class Main extends JavaPlugin {
         Main.get().getLogger().info("[DEBUG] > " + message);
     }
 
+    // Console Logging
     public static void log(String message) {
         Main.get().getLogger().info(message);
     }
     public static void warn(String message) {
         Main.get().getLogger().warning(message);
     }
-
     public static void error(String message) {
         Main.get().getLogger().severe(ErrorHandler.errorSplash() + " - " + message);
     }
 
+    // Permission Check
     public static Boolean checkPerms(Player player, String permission) {
         debug("Player " + player.getName() + " has permission to node " + permission + ": " + player.hasPermission(permission));
         if (!player.hasPermission(permission)) {

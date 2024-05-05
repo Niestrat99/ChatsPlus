@@ -9,14 +9,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Config extends ConfigFile {
     public static Config configFile;
 
     private static void validateFile() {
         if (!Main.get().getDataFolder().exists()) {
-            Main.get().getDataFolder().mkdir();
+            boolean createFolderSuccess = Main.get().getDataFolder().mkdir();
+            if (!createFolderSuccess) {
+                Main.error("Failed to create DataFolder for ChatsPlus. Please tell the developer about this!");
+            }
         }
     }
 
@@ -24,12 +26,17 @@ public class Config extends ConfigFile {
         super(file);
     }
 
-    public static void loadConfig() throws Exception {
+    public static void loadConfig() {
         validateFile();
-        Config config = new Config(new File(Main.get().getDataFolder(), "config.yml"));
-        configFile = config;
-        config.load();
-        validateChats();
+        try {
+            Config config = new Config(new File(Main.get().getDataFolder(), "config.yml"));
+            configFile = config;
+            config.load();
+            validateChats();
+        } catch (Exception e) {
+            Main.error("Something went wrong whilst loading configurations: " + e.getMessage());
+        }
+
     }
 
     public static void reloadConfig() {
@@ -39,7 +46,7 @@ public class Config extends ConfigFile {
             Chats.getChatsList();
             Worlds.getWorldDefaultChats();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            Main.error("Something went wrong whilst reloading configurations: " + e.getMessage());
         }
     }
 
@@ -144,19 +151,19 @@ public class Config extends ConfigFile {
             String id = chatSubConfig.getString("ignoreDiscord");
 
             if (title == null) {
-                Main.error(chat + " is missing title, setting default.");
+                Main.warn(chat + " is missing title, setting default.");
                 chatSubConfig.set("title", "[" + chat + "]");
             }
             if (tag == null) {
-                Main.error(chat + " is missing nameTag, setting default.");
+                Main.warn(chat + " is missing nameTag, setting default.");
                 chatSubConfig.set("nameTag", "'<name>'");
             }
             if (mg == null) {
-                Main.error(chat + " is missing messageColor, setting default.");
+                Main.warn(chat + " is missing messageColor, setting default.");
                 chatSubConfig.set("messageColor", "&r");
             }
             if (id == null) {
-                Main.error(chat + "is missing ignoreDiscord, setting default.");
+                Main.warn(chat + "is missing ignoreDiscord, setting default.");
                 chatSubConfig.set("ignoreDiscord", true);
             }
             configFile.save();

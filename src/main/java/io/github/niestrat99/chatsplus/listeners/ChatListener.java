@@ -23,7 +23,7 @@ import java.util.Objects;
 public class ChatListener implements Listener {
 
     @EventHandler
-    public void chatEvent(AsyncPlayerChatEvent e) { // Deprecated? Don't care for now.
+    public void chatEvent(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
 
         Main.debug("Player chatted: " + player.getName());
@@ -111,21 +111,6 @@ public class ChatListener implements Listener {
                 Chats.assignPlayerToChat(player, worldChat);
                 Main.debug("Assigning player " + player.getName() + "to standard chat of world '" + player.getWorld() + "'.");
                 MessageUtil.msgInfo(player, "You have been assigned to chat &b" + worldChat + "&r.");
-            }
-        }
-    }
-
-    @EventHandler
-    public void essentialsDiscord(DiscordChatMessageEvent e) {
-        Player player = e.getPlayer();
-        if (Chats.playerIsInChat(player)) {
-            String chat = Chats.getChat(player);
-            assert chat != null;
-            ConfigSection chatSubConfigs = Config.configFile.getConfigSection("chats").getConfigSection(chat);
-            boolean ignoreDiscord = chatSubConfigs.getBoolean("ignoreDiscord");
-
-            if (ignoreDiscord) {
-                e.setCancelled(true);
             }
         }
     }
