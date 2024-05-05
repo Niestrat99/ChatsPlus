@@ -83,5 +83,5 @@ jobs:
         uses: Thatsmusic99/actions-git-discord-webhook@main
         if: ${{ github.repository == 'Niestrat99/ChatsPlus' }}
         with:
-          webhook_url: ${{ secrets.CHAT_PLUS_BUILD }}
+          webhook_url: ${{ secrets.CHATS_PLUS_BUILD }}
           status: ${{ job.status }}
