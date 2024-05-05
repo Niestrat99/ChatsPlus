@@ -11,7 +11,6 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -49,6 +48,7 @@ public class ChatCommand implements TabExecutor {
                             Main.debug("World data of " + world.getName() + ": Chat=" + worldData.getString("chat") + ", isGlobal=" + worldData.getBoolean("isGlobal") + ", offStandard=" + worldData.getBoolean("offStandard"));
                         }
 
+                        assert worldData != null;
                         if (chat == null) {
                             MessageUtil.msgError(player, "You are not in any chat.");
                             Main.debug("Player is not in any chat, returning.");
@@ -153,7 +153,7 @@ public class ChatCommand implements TabExecutor {
                                 Main.debug("Chat does not exist, returning.");
                                 return false;
                             }
-                            if (Chats.playerIsInChat(target) && Chats.getChat(player).equals(chatName)) {
+                            if (Chats.playerIsInChat(target) && Objects.requireNonNull(Chats.getChat(player)).equals(chatName)) {
                                 MessageUtil.msgError(player, target.getName() + " is already in that chat.");
                                 Main.debug("Target is already assigned to chat " + chatName + ", returning.");
                                 return false;

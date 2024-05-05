@@ -4,10 +4,7 @@ import io.github.niestrat99.chatsplus.commands.ChatCommand;
 import io.github.niestrat99.chatsplus.commands.ConsoleCommands;
 import io.github.niestrat99.chatsplus.configuration.Config;
 import io.github.niestrat99.chatsplus.listeners.ChatListener;
-import io.github.niestrat99.chatsplus.utils.Chats;
-import io.github.niestrat99.chatsplus.utils.ErrorHandler;
-import io.github.niestrat99.chatsplus.utils.MessageUtil;
-import io.github.niestrat99.chatsplus.utils.Worlds;
+import io.github.niestrat99.chatsplus.utils.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -40,6 +37,9 @@ public class Main extends JavaPlugin {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        // Fun extra
+        MutualCheck.checkForMutuals();
 
         // Done
         log("ChatsPlus is ready!");

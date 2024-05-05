@@ -4,17 +4,19 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "io.github.niestrat99"
+version = project.property("plugin_version")!!
 
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://repo.bsdevelopment.org/releases")
+    maven("https://repo.essentialsx.net/releases/")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsXDiscord:2.20.1")
     implementation("com.github.thatsmusic99:ConfigurationMaster-API:v2.0.0-rc.2")
 }
 
@@ -30,6 +32,14 @@ tasks {
     shadowJar {
         val baseRelocation = "io.github.niestrat99.chatsplus.libs"
         relocate("io.github.thatsmusic99.configurationmaster", "$baseRelocation.configurationmaster")
+    }
+
+    processResources {
+        inputs.property("plugin_version", project.version)
+        filteringCharset = "UTF-8"
+        filesMatching("plugin.yml") {
+            expand(Pair("plugin_version", project.version))
+        }
     }
 
     runServer {

@@ -3,7 +3,6 @@ package io.github.niestrat99.chatsplus.commands;
 import io.github.niestrat99.chatsplus.Main;
 import io.github.niestrat99.chatsplus.utils.Chats;
 import io.github.niestrat99.chatsplus.utils.Worlds;
-import io.github.thatsmusic99.configurationmaster.api.ConfigSection;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,15 +39,20 @@ public class ConsoleCommands implements CommandExecutor {
                         }
                     }
 
-                    default -> {
-                        Main.log("Console commands for ChatsPlus:");
-                        Main.log("chatsystem listChats - Lists all chats.");
-                        Main.log("chatsystem listWorldChats - Lists all worlds with assigned chats.");
-                        Main.log("chatsystem getPlayerChats - Lists all players using a chat.");
-                    }
+                    default -> commandList();
+
                 }
+            } else {
+                commandList();
             }
         }
         return true;
+    }
+
+    private void commandList() {
+        Main.log("Console commands for ChatsPlus:");
+        Main.log("chatsystem listChats - Lists all chats.");
+        Main.log("chatsystem listWorldChats - Lists all worlds with assigned chats.");
+        Main.log("chatsystem getPlayerChats - Lists all players using a chat.");
     }
 }

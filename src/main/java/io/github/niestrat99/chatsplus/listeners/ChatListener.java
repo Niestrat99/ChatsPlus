@@ -7,8 +7,8 @@ import io.github.niestrat99.chatsplus.utils.Chats;
 import io.github.niestrat99.chatsplus.utils.MessageUtil;
 import io.github.niestrat99.chatsplus.utils.Worlds;
 import io.github.thatsmusic99.configurationmaster.api.ConfigSection;
+import net.essentialsx.api.v2.events.discord.DiscordChatMessageEvent;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ChatListener implements Listener {
 
@@ -47,7 +48,6 @@ public class ChatListener implements Listener {
 
             for (Player recipient : Main.get().getServer().getOnlinePlayers()) {
                 List<String> mutedChat = Mute.muteList.get(recipient);
-
                 if (mutedChat != null) {
                     assert chat != null;
                     if (mutedChat.contains(chat)) {
@@ -59,6 +59,7 @@ public class ChatListener implements Listener {
                     e.getRecipients().remove(recipient);
                     continue;
                 }
+                assert worldData != null;
                 if (Worlds.worlds.containsKey(world.getName()) && worldData.getBoolean("isGlobal")) {
                     if (!recipient.getWorld().equals(player.getWorld()) || !recipient.hasPermission("chatsplus.admin.bypass")) {e.getRecipients().remove(recipient);}
                     e.setFormat(MessageUtil.chatRoomTitle(player));
@@ -85,6 +86,7 @@ public class ChatListener implements Listener {
         String chat = Config.configFile.getString("assign-chat-on-join");
         ConfigSection worldData = Worlds.getData(player.getWorld().getName());
 
+        assert chat != null;
         if (player.hasPermission("chatsplus.admin.join") && !chat.isBlank()) {
             Chats.assignPlayerToChat(player, chat);
             MessageUtil.msgInfo(player, "You have been assigned to chat &b" + chat + "&r.");
@@ -105,10 +107,25 @@ public class ChatListener implements Listener {
         ConfigSection worldData = Worlds.getData(player.getWorld().getName());
         if (worldData != null) {
             String worldChat = worldData.getString("chat");
-            if (!Chats.getChat(player).equals(worldChat)) {
+            if (!Objects.requireNonNull(Chats.getChat(player)).equals(worldChat)) {
                 Chats.assignPlayerToChat(player, worldChat);
                 Main.debug("Assigning player " + player.getName() + "to standard chat of world '" + player.getWorld() + "'.");
                 MessageUtil.msgInfo(player, "You have been assigned to chat &b" + worldChat + "&r.");
+            }
+        }
+    }
+
+    @EventHandler
+    public void essentialsDiscord(DiscordChatMessageEvent e) {
+        Player player = e.getPlayer();
+        if (Chats.playerIsInChat(player)) {
+            String chat = Chats.getChat(player);
+            assert chat != null;
+            ConfigSection chatSubConfigs = Config.configFile.getConfigSection("chats").getConfigSection(chat);
+            boolean ignoreDiscord = chatSubConfigs.getBoolean("ignoreDiscord");
+
+            if (ignoreDiscord) {
+                e.setCancelled(true);
             }
         }
     }

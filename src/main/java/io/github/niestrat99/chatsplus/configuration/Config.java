@@ -64,12 +64,17 @@ public class Config extends ConfigFile {
         addComment(
                 """
                 The chats must have sub-settings set up as well, or else it uses default values which may look ugly.
+                - title = The text that appears in the very front of the message.
+                - nameTag = The way the player name is displayed. You can make it look like "xXPlayerNameXx" for example.
+                - messageColor = The color of what the actual message shall appear in.
+                - ignoreDiscord = This prevents the EssentialsX Discord plugin from sending a message out of this chat into the Discord server, if set to "true".
                 EXAMPLE:
                 chats:
                     vip:
                         title: '&8[&6VIP&8]'
                         nameTag: '&8<&6name&8>'
                         messageColor: '&6'
+                        ignoreDiscord: true
                 
                 NOTE:
                 - The color codes (e.g. &6) are optional, but allow you to make your chats look fancier.
@@ -81,6 +86,7 @@ public class Config extends ConfigFile {
         addExample("chats.staff.title", "&b[&fStaffChat&b]");
         addExample("chats.staff.nameTag", "&b<&fname&b>");
         addExample("chats.staff.messageColor", "&r");
+        addExample("chats.staff.ignoreDiscord", true);
 
         addComment("[]>-----------------------------------------------------------------------------<[]");
 
@@ -135,6 +141,7 @@ public class Config extends ConfigFile {
             String title = chatSubConfig.getString("title");
             String tag = chatSubConfig.getString("nameTag");
             String mg = chatSubConfig.getString("messageColor");
+            String id = chatSubConfig.getString("ignoreDiscord");
 
             if (title == null) {
                 Main.error(chat + " is missing title, setting default.");
@@ -147,6 +154,10 @@ public class Config extends ConfigFile {
             if (mg == null) {
                 Main.error(chat + " is missing messageColor, setting default.");
                 chatSubConfig.set("messageColor", "&r");
+            }
+            if (id == null) {
+                Main.error(chat + "is missing ignoreDiscord, setting default.");
+                chatSubConfig.set("ignoreDiscord", true);
             }
             configFile.save();
         }

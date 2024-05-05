@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class ErrorHandler {
 
-    private static List<String> errorMessages = new ArrayList<>(Arrays.asList(
+    private static final List<String> errorMessages = new ArrayList<>(Arrays.asList(
             "AAAAAAAAAA!!!",
             "Oh fiddlesticks, what now!?",
             "Hello darkness, my old friend!",

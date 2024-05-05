@@ -15,8 +15,7 @@ public class Chats {
         if (!playerIsInChat(player)) {
             return null;
         }
-        String chat = chatRoom.get(player);
-        return chat;
+        return chatRoom.get(player);
     }
     public static Boolean playerIsInChat(Player player) {
         return chatRoom.containsKey(player);
