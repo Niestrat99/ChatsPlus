@@ -64,7 +64,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: success()
         with:
-          name: ChatPings
+          name: ChatsPlus
           path: build/libs/ChatsPlus-*.jar
           if-no-files-found: error
 
