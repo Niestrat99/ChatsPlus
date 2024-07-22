@@ -49,7 +49,6 @@ public class ChatListener implements Listener {
             for (Player recipient : Main.get().getServer().getOnlinePlayers()) {
                 List<String> mutedChat = Mute.muteList.get(recipient);
                 if (mutedChat != null) {
-                    assert chat != null;
                     if (mutedChat.contains(chat)) {
                         e.getRecipients().remove(recipient);
                     }
@@ -59,8 +58,8 @@ public class ChatListener implements Listener {
                     e.getRecipients().remove(recipient);
                     continue;
                 }
-                assert worldData != null;
-                if (Worlds.worlds.containsKey(world.getName()) && worldData.getBoolean("isGlobal")) {
+
+                if (worldData != null && worldData.getBoolean("isGlobal")) {
                     if (!recipient.getWorld().equals(player.getWorld()) || !recipient.hasPermission("chatsplus.admin.bypass")) {e.getRecipients().remove(recipient);}
                     e.setFormat(MessageUtil.chatRoomTitle(player));
                     continue;

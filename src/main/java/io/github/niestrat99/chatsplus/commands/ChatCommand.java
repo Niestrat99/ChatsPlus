@@ -48,12 +48,11 @@ public class ChatCommand implements TabExecutor {
                             Main.debug("World data of " + world.getName() + ": Chat=" + worldData.getString("chat") + ", isGlobal=" + worldData.getBoolean("isGlobal") + ", offStandard=" + worldData.getBoolean("offStandard"));
                         }
 
-                        assert worldData != null;
                         if (chat == null) {
                             MessageUtil.msgError(player, "You are not in any chat.");
                             Main.debug("Player is not in any chat, returning.");
                             return false;
-                        } else if (Worlds.worlds.containsKey(world.getName()) && chat.equals(worldData.getString("chat"))) {
+                        } else if (worldData != null && chat.equals(worldData.getString("chat"))) {
                             MessageUtil.msgError(player, "You cannot leave this chat due to world restrictions.");
                             Main.debug("Player is in world standard chat. Returning.");
                             return false;
