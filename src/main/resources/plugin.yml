@@ -9,9 +9,6 @@ permissions:
   chatsplus.command.*:
     default: "true"
     children:
-      chatsplus.command.assign: false
-      chatsplus.command.reload: false
-      chatsplus.command.kick: false
       chatsplus.command.help: true
       chatsplus.command.chat: true
       chatsplus.command.off: true
@@ -24,6 +21,9 @@ permissions:
     children:
       chatsplus.admin.join: true
       chatsplus.admin.bypass: true
+      chatsplus.command.reload: true
+      chatsplus.command.assign: true
+      chatsplus.command.kick: true
 
 commands:
   chat:
