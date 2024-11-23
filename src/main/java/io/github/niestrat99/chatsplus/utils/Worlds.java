@@ -5,6 +5,7 @@ import io.github.niestrat99.chatsplus.configuration.Config;
 import io.github.thatsmusic99.configurationmaster.api.ConfigSection;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 
 public class Worlds {
     public static HashMap<String, ConfigSection> worlds = new HashMap<>();
@@ -15,7 +16,7 @@ public class Worlds {
             for (String worldName : perWorldChat.getKeys(false)) {
                 ConfigSection worldConfig = perWorldChat.getConfigSection(worldName);
                 if (worldConfig.getString("chat") == null || !worldConfig.getBoolean("isGlobal") || !worldConfig.getBoolean("offStandard")) {
-                    Main.error("Missing sub configurations for world "+ worldName + " and will be ignored. Please correct it in the config file and reload to fix.");
+                    Main.log(Level.SEVERE, ErrorHandler.errorSplash() + "Missing sub configurations for world "+ worldName + " and will be ignored. Please correct it in the config file and reload to fix.", null, null);
                     continue;
                 }
                 worlds.put(worldName, Config.configFile.getConfigSection("per-world-chat." + worldName));

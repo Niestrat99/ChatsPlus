@@ -2,6 +2,7 @@ package io.github.niestrat99.chatsplus.configuration;
 
 import io.github.niestrat99.chatsplus.Main;
 import io.github.niestrat99.chatsplus.utils.Chats;
+import io.github.niestrat99.chatsplus.utils.ErrorHandler;
 import io.github.niestrat99.chatsplus.utils.Worlds;
 import io.github.thatsmusic99.configurationmaster.api.ConfigFile;
 import io.github.thatsmusic99.configurationmaster.api.ConfigSection;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 public class Config extends ConfigFile {
     public static Config configFile;
@@ -17,7 +19,7 @@ public class Config extends ConfigFile {
         if (!Main.get().getDataFolder().exists()) {
             boolean createFolderSuccess = Main.get().getDataFolder().mkdir();
             if (!createFolderSuccess) {
-                Main.error("Failed to create DataFolder for ChatsPlus. Please tell the developer about this!");
+                Main.log(Level.SEVERE, ErrorHandler.errorSplash() + "Failed to create DataFolder for ChatsPlus. Please tell the developer about this!", Config.class, null);
             }
         }
     }
@@ -34,7 +36,7 @@ public class Config extends ConfigFile {
             config.load();
             validateChats();
         } catch (Exception e) {
-            Main.error("Something went wrong whilst loading configurations: " + e.getMessage());
+            Main.log(Level.SEVERE, ErrorHandler.errorSplash() + "Something went wrong while loading configurations!", Config.class, e);
         }
 
     }
@@ -46,7 +48,7 @@ public class Config extends ConfigFile {
             Chats.getChatsList();
             Worlds.getWorldDefaultChats();
         } catch (Exception e) {
-            Main.error("Something went wrong whilst reloading configurations: " + e.getMessage());
+            Main.log(Level.SEVERE, ErrorHandler.errorSplash() + "Something went wrong while reloading configurations!", Config.class, e);
         }
     }
 
@@ -151,19 +153,19 @@ public class Config extends ConfigFile {
             String id = chatSubConfig.getString("ignoreDiscord");
 
             if (title == null) {
-                Main.warn(chat + " is missing title, setting default.");
+                Main.log(Level.WARNING, chat + " is missing title, setting default.", null, null);
                 chatSubConfig.set("title", "[" + chat + "]");
             }
             if (tag == null) {
-                Main.warn(chat + " is missing nameTag, setting default.");
+                Main.log(Level.WARNING, chat + " is missing nameTag, setting default.", null, null);
                 chatSubConfig.set("nameTag", "'<name>'");
             }
             if (mg == null) {
-                Main.warn(chat + " is missing messageColor, setting default.");
+                Main.log(Level.WARNING, chat + " is missing messageColor, setting default.", null, null);
                 chatSubConfig.set("messageColor", "&r");
             }
             if (id == null) {
-                Main.warn(chat + "is missing ignoreDiscord, setting default.");
+                Main.log(Level.WARNING, chat + "is missing ignoreDiscord, setting default.", null, null);
                 chatSubConfig.set("ignoreDiscord", true);
             }
             configFile.save();

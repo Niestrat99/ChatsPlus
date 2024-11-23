@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
+import java.util.logging.Level;
 
 public class Main extends JavaPlugin {
     public static Main instance;
@@ -19,22 +20,22 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        log("ChatsPlus is starting up!");
+        log(Level.INFO, "ChatsPlus is starting up!", null, null);
 
         // Registering listeners
-        log("Registering events...");
+        log(Level.INFO, "Registering events...", null, null);
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
         if (Bukkit.getPluginManager().getPlugin("EssentialsDiscord") != null) {
             getServer().getPluginManager().registerEvents(new EssentialsDiscordListener(), this);
         }
 
         // Registering commands
-        log("Registering commands...");
+        log(Level.INFO, "Registering commands...", null, null);
         Objects.requireNonNull(getCommand("chat")).setExecutor(new ChatCommand());
         Objects.requireNonNull(getCommand("chatsystem")).setExecutor(new ConsoleCommands());
 
         // Set up config
-        log("Loading config...");
+        log(Level.INFO, "Loading configuration...", null, null);
         try {
             Config.loadConfig();
             Chats.getChatsList();
@@ -47,7 +48,7 @@ public class Main extends JavaPlugin {
         MutualCheck.checkForMutuals();
 
         // Done
-        log("ChatsPlus is ready!");
+        log(Level.INFO, "ChatsPlus has successfully loaded!", null, null);
     }
 
     public static Main get() {
@@ -61,14 +62,15 @@ public class Main extends JavaPlugin {
     }
 
     // Console Logging
-    public static void log(String message) {
-        Main.get().getLogger().info(message);
-    }
-    public static void warn(String message) {
-        Main.get().getLogger().warning(message);
-    }
-    public static void error(String message) {
-        Main.get().getLogger().severe(ErrorHandler.errorSplash() + " - " + message);
+    public static void log(Level level, String msg, Class<?> className, Exception stacktrace) {
+        String message = msg;
+        if (className != null) {
+            message = message.concat("\n(" + className.getName() + ")");
+        }
+        if (stacktrace != null) {
+            message = message.concat("\nStacktrace:\n" + stacktrace);
+        }
+        instance.getLogger().log(level, message);
     }
 
     // Permission Check

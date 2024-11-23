@@ -10,6 +10,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.logging.Level;
+
 public class ConsoleCommands implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -17,25 +19,25 @@ public class ConsoleCommands implements CommandExecutor {
             if (args.length > 0) {
                 switch (args[0]) {
                     case "listChats" -> {
-                        Main.log("List of chats:");
+                        Main.log(Level.INFO, "List of chats:", null, null);
                         for (String chat : Chats.chats.keySet()) {
-                            Main.log("- " + chat);
+                            Main.log(Level.INFO, "- " + chat, null, null);
                         }
                     }
 
                     case "listWorldChats" -> {
-                        Main.log("List of Per-World-Chats:");
+                        Main.log(Level.INFO, "List of Per-World-Chats:", null, null);
                         for (String world : Worlds.worlds.keySet()) {
                             String worldChat = Worlds.worlds.get(world).getString("chat");
-                            Main.log("- World:" + world + " | Chat: " + worldChat);
+                            Main.log(Level.INFO, "- World:" + world + " | Chat: " + worldChat, null, null);
                         }
                     }
 
                     case "getPlayerChats" -> {
-                        Main.log("List of players in a chat:");
+                        Main.log(Level.INFO, "List of players in a chat:", null, null);
                         for (Player player : Chats.chatRoom.keySet()) {
                             String chat = Chats.chatRoom.get(player);
-                            Main.log("- Player: " + player.getName() + " | Chat: " + chat);
+                            Main.log(Level.INFO, "- Player: " + player.getName() + " | Chat: " + chat, null, null);
                         }
                     }
 
@@ -50,9 +52,9 @@ public class ConsoleCommands implements CommandExecutor {
     }
 
     private void commandList() {
-        Main.log("Console commands for ChatsPlus:");
-        Main.log("chatsystem listChats - Lists all chats.");
-        Main.log("chatsystem listWorldChats - Lists all worlds with assigned chats.");
-        Main.log("chatsystem getPlayerChats - Lists all players using a chat.");
+        Main.log(Level.INFO, "Console commands for ChatsPlus:", null, null);
+        Main.log(Level.INFO, "chatsystem listChats - Lists all chats.", null, null);
+        Main.log(Level.INFO, "chatsystem listWorldChats - Lists all worlds with assigned chats.", null, null);
+        Main.log(Level.INFO, "chatsystem getPlayerChats - Lists all players using a chat.", null, null);
     }
 }

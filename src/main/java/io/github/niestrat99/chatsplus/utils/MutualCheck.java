@@ -6,6 +6,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.logging.Level;
 
 public class MutualCheck {
 
@@ -13,12 +14,12 @@ public class MutualCheck {
         try {
             HashMap<String, String> pluginConvo = new LinkedHashMap<>();
 
-            Main.log("AVENGERS, ASSEMBLE!");
+            Main.log(Level.INFO, "AVENGERS, ASSEMBLE!", null, null);
             pluginConvo.put("ChatPings", "Huh??");
             pluginConvo.put("AdvancedTeleport", "What the?");
             pluginConvo.put("HeadsPlus", "Hey, that's my line!!");
             pluginConvo.put("SimplePets", "Oh.");
-            pluginConvo.put("KeepInvIndividual", "AAAAAAAA!!");
+            pluginConvo.put("KeepInvIndividual", "CHILDREN YEARN FOR THE MINES!!");
 
             for (String plugin : pluginConvo.keySet()) {
                 Plugin validPlugin = Bukkit.getPluginManager().getPlugin(plugin);
