@@ -1,6 +1,7 @@
 package io.github.niestrat99.chatsplus.commands;
 
 import io.github.niestrat99.chatsplus.Main;
+import io.github.niestrat99.chatsplus.configuration.Config;
 import io.github.niestrat99.chatsplus.utils.Chats;
 import io.github.niestrat99.chatsplus.utils.Worlds;
 import org.bukkit.command.Command;
@@ -41,6 +42,12 @@ public class ConsoleCommands implements CommandExecutor {
                         }
                     }
 
+                    case "reload" -> {
+                        Main.log(Level.INFO, "Reloading config files...", null, null);
+                        Config.reloadConfig();
+                        Main.log(Level.INFO, "Reload complete!", null, null);
+                    }
+
                     default -> commandList();
 
                 }
@@ -56,5 +63,6 @@ public class ConsoleCommands implements CommandExecutor {
         Main.log(Level.INFO, "chatsystem listChats - Lists all chats.", null, null);
         Main.log(Level.INFO, "chatsystem listWorldChats - Lists all worlds with assigned chats.", null, null);
         Main.log(Level.INFO, "chatsystem getPlayerChats - Lists all players using a chat.", null, null);
+        Main.log(Level.INFO, "chatsystem reload - Reloads the config file to apply changes.", null, null);
     }
 }
