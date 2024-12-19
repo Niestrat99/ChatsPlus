@@ -60,7 +60,11 @@ public class ChatListener implements Listener {
                 }
 
                 if (worldData != null && worldData.getBoolean("isGlobal")) {
-                    if (!recipient.getWorld().equals(player.getWorld()) || !recipient.hasPermission("chatsplus.admin.bypass")) {e.getRecipients().remove(recipient);}
+                    if (!recipient.getWorld().equals(player.getWorld())
+                            || !recipient.hasPermission("chatsplus.admin.bypass")) {
+                        e.getRecipients().remove(recipient);
+                    }
+
                     e.setFormat(MessageUtil.chatRoomTitle(player));
                     continue;
                 }
@@ -85,17 +89,18 @@ public class ChatListener implements Listener {
         String chat = Config.configFile.getString("assign-chat-on-join");
         ConfigSection worldData = Worlds.getData(player.getWorld().getName());
 
-        assert chat != null;
-        if (player.hasPermission("chatsplus.admin.join") && !chat.isBlank()) {
-            Chats.assignPlayerToChat(player, chat);
-            MessageUtil.msgInfo(player, "You have been assigned to chat &b" + chat + "&r.");
-            Main.debug("Player" + player.getName() + "has permission to admin chat.");
+        if (chat != null) {
+            if (player.hasPermission("chatsplus.admin.join") && !chat.isBlank()) {
+                Chats.assignPlayerToChat(player, chat);
+                MessageUtil.msgInfo(player, "You have been assigned to chat &b" + chat + "&r.");
+                Main.debug("Player" + player.getName() + "has permission to admin chat.");
 
-        } else if (worldData != null && worldData.getBoolean("offStandard")) {
-            String worldChat = worldData.getString("chat");
-            Chats.assignPlayerToChat(player, worldData.getString("chat"));
-            MessageUtil.msgInfo(player, "You have been assigned to chat &b" + worldChat + "&r.");
-            Main.debug("Assigning player " + player.getName() + "to standard chat of world '" + player.getWorld() + "'.");
+            } else if (worldData != null && worldData.getBoolean("offStandard")) {
+                String worldChat = worldData.getString("chat");
+                Chats.assignPlayerToChat(player, worldData.getString("chat"));
+                MessageUtil.msgInfo(player, "You have been assigned to chat &b" + worldChat + "&r.");
+                Main.debug("Assigning player " + player.getName() + "to standard chat of world '" + player.getWorld() + "'.");
+            }
         }
     }
 

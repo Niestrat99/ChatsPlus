@@ -15,7 +15,10 @@ public class Worlds {
         if (perWorldChat != null) {
             for (String worldName : perWorldChat.getKeys(false)) {
                 ConfigSection worldConfig = perWorldChat.getConfigSection(worldName);
-                if (worldConfig.getString("chat") == null || !worldConfig.getBoolean("isGlobal") || !worldConfig.getBoolean("offStandard")) {
+                if (worldConfig.getString("chat") == null
+                        || !worldConfig.getBoolean("isGlobal")
+                        || !worldConfig.getBoolean("offStandard")) {
+
                     Main.log(Level.SEVERE, ErrorHandler.errorSplash() + "Missing sub configurations for world "+ worldName + " and will be ignored. Please correct it in the config file and reload to fix.", null, null);
                     continue;
                 }
