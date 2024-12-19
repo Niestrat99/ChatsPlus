@@ -7,7 +7,9 @@ import io.github.niestrat99.chatsplus.listeners.ChatListener;
 import io.github.niestrat99.chatsplus.listeners.EssentialsDiscordListener;
 import io.github.niestrat99.chatsplus.utils.*;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -24,15 +26,15 @@ public class Main extends JavaPlugin {
 
         // Registering listeners
         log(Level.INFO, "Registering events...", null, null);
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        regEvent(new ChatListener());
         if (Bukkit.getPluginManager().getPlugin("EssentialsDiscord") != null) {
-            getServer().getPluginManager().registerEvents(new EssentialsDiscordListener(), this);
+            regEvent(new EssentialsDiscordListener());
         }
 
         // Registering commands
         log(Level.INFO, "Registering commands...", null, null);
-        Objects.requireNonNull(getCommand("chat")).setExecutor(new ChatCommand());
-        Objects.requireNonNull(getCommand("chatsystem")).setExecutor(new ConsoleCommands());
+        regCmd("chat", new ChatCommand());
+        regCmd("chatsystem", new ConsoleCommands());
 
         // Set up config
         log(Level.INFO, "Loading configuration...", null, null);
@@ -81,5 +83,13 @@ public class Main extends JavaPlugin {
             return false;
         }
         return true;
+    }
+
+    // Functions to register commands and events. Just to personally write things shorter.
+    private static void regCmd(String commandName, CommandExecutor commandClass) {
+        Objects.requireNonNull(instance.getCommand(commandName)).setExecutor(commandClass);
+    }
+    private static void regEvent(Listener eventClass) {
+        instance.getServer().getPluginManager().registerEvents(eventClass, instance);
     }
 }
