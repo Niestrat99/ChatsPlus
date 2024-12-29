@@ -5,7 +5,11 @@ import io.github.niestrat99.chatsplus.commands.ConsoleCommands;
 import io.github.niestrat99.chatsplus.configuration.Config;
 import io.github.niestrat99.chatsplus.listeners.ChatListener;
 import io.github.niestrat99.chatsplus.listeners.EssentialsDiscordListener;
-import io.github.niestrat99.chatsplus.utils.*;
+import io.github.niestrat99.chatsplus.utils.Chats;
+import io.github.niestrat99.chatsplus.utils.MessageUtil;
+import io.github.niestrat99.chatsplus.utils.MutualCheck;
+import io.github.niestrat99.chatsplus.utils.Worlds;
+import io.github.niestrat99.chatsplus.utils.expansions.PAPIExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -21,6 +25,10 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+
+        if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new PAPIExpansion().register();
+        }
 
         log(Level.INFO, "ChatsPlus is starting up!", null, null);
 

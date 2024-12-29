@@ -12,11 +12,13 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://repo.bsdevelopment.org/releases")
     maven("https://repo.essentialsx.net/releases/")
+    maven("https://repo.extendedclip.com/releases/")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly("net.essentialsx:EssentialsXDiscord:2.20.1")
+    compileOnly("me.clip:placeholderapi:2.11.6")
     implementation("com.github.thatsmusic99:ConfigurationMaster-API:v2.0.0-rc.2")
 }
 
