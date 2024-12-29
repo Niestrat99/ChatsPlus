@@ -5,6 +5,9 @@ main: io.github.niestrat99.chatsplus.Main
 version: ${plugin_version}
 api-version: 1.20
 
+softdepend:
+  - PlaceholderAPI
+
 permissions:
   chatsplus.command.*:
     default: "true"
@@ -24,6 +27,7 @@ permissions:
       chatsplus.command.reload: true
       chatsplus.command.assign: true
       chatsplus.command.kick: true
+      chatsplus.chat.read: true
 
 commands:
   chat:

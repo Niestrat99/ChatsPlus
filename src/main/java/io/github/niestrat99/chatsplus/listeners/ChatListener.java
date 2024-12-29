@@ -61,7 +61,8 @@ public class ChatListener implements Listener {
 
                 if (worldData != null && worldData.getBoolean("isGlobal")) {
                     if (!recipient.getWorld().equals(player.getWorld())
-                            || !recipient.hasPermission("chatsplus.admin.bypass")) {
+                            || !recipient.hasPermission("chatsplus.admin.bypass")
+                            || !recipient.hasPermission("chatsplus.chat.read" + chat)) {
                         e.getRecipients().remove(recipient);
                     }
 
