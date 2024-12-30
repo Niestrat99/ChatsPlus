@@ -181,7 +181,8 @@ public class ChatCommand implements TabExecutor {
 
                         if (Chats.playerIsInChat(player)) {
                             if (Chats.chatRoom.get(player).contains(args[0])) {
-                                MessageUtil.msgError(player, "You're already in this chat room!");
+                                Chats.unassignPlayer(player);
+                                MessageUtil.msgSuccess(player, "You left the chat room.");
                                 return false;
                             }
                             Main.debug("Player switches chats from " + Chats.getChat(player) + " to " + chatName + ".");
