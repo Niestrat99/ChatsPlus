@@ -25,17 +25,15 @@ public class PAPIExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String identifier) {
-        Player onlinePlayer = player.getPlayer();
-
         if (identifier.equals("chat")) {
-            ConfigSection chat = Chats.chats.get(Chats.getChat(onlinePlayer));
-            String title = chat.getString("title");
-            if (title != null) {
-                return title;
-            } else {
+            Player onlinePlayer = player.getPlayer();
+            if (!Chats.playerIsInChat(onlinePlayer)) {
                 return "";
             }
+            ConfigSection chat = Chats.chats.get(Chats.getChat(onlinePlayer));
+            String title = chat.getString("title");
+            return title;
         }
-        return null;
+        return "";
     }
 }
