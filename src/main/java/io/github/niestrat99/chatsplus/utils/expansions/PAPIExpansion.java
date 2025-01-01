@@ -30,7 +30,11 @@ public class PAPIExpansion extends PlaceholderExpansion {
         if (identifier.equals("chat")) {
             ConfigSection chat = Chats.chats.get(Chats.getChat(onlinePlayer));
             String title = chat.getString("title");
-            return title;
+            if (title != null) {
+                return title;
+            } else {
+                return "";
+            }
         }
         return null;
     }
